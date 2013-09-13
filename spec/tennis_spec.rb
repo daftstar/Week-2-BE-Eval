@@ -121,7 +121,6 @@ describe Tennis::Player do
     end
 
 
-
     context 'when player points is 4 and opponent points is < 3' do
       it 'returns winner' do
         player.points = 4
@@ -131,6 +130,15 @@ describe Tennis::Player do
       end
     end
 
+    # this happens when players have gone beyond basic tennis deuce.  
+    context 'when player points is > 4 and player points 2 above opponent points' do
+      it 'returns winner' do
+        player.points = 8
+        player.opponent.points = 6
+
+        expect(player.score).to eq('winner')
+      end
+    end    
 
   end
 end
