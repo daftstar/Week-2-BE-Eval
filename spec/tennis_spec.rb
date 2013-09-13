@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'rspec'
+require 'pry'
 require_relative '../tennis'
 
 describe Tennis::Game do
@@ -76,14 +77,58 @@ describe Tennis::Player do
     end
     
 
-    context 'when points is 3' do
+    context 'when player points is 3 and opponent points is not 3' do
       it 'returns forty' do
-        player.points = 3
+        player.points = 3 
+        player.opponent.points = 2
+
+        # # cannot use this setup as program exits after setting player.points to 3
+        # player.points = 3 && player.opponent.points != 3
 
         expect(player.score).to eq('forty')
       end
+    end
 
 
+    context 'when player points is 3 and opponent points is 3' do
+      it 'returns deuce' do
+        player.points = 3
+        player.opponent.points = 3
+
+        expect(player.score).to eq('deuce!')
+      end
+    end
+
+
+    context 'when player points is 4 and opponent points is 3' do
+      it 'returns advantage' do
+        player.points = 4
+        player.opponent.points = 3
+
+        expect(player.score).to eq('advantage')
+      end
+    end
+
+    # Advantage can occur at anytime after each player has gone into deuce. 
+    # 
+    context 'when player points is 5 and opponent points is 4' do
+      it 'returns advantage' do
+        player.points = 5
+        player.opponent.points = 4
+
+        expect(player.score).to eq('advantage')
+      end
+    end
+
+
+
+    context 'when player points is 4 and opponent points is < 3' do
+      it 'returns winner' do
+        player.points = 4
+        player.opponent.points = 2
+
+        expect(player.score).to eq('winner')
+      end
     end
 
 

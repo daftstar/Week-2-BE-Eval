@@ -53,6 +53,52 @@ module Tennis
 
     # Returns the String score for the player.
     def score
+
+      return 'love'       if @points == 0
+      return 'fifteen'    if @points == 1
+      return 'thirty'     if @points == 2
+      return 'forty'      if @points == 3 && @opponent.points != 3
+      return 'deuce!'     if @points >= 3 && @points == @opponent.points 
+      return 'advantage'  if @points  > 3 && @points == @opponent.points + 1
+      return 'winner'     if @points  > 3 && @points == @opponent.points + 2
+
+
+      
+
+      #gave up on case method.  Could not figure out to use case comparisons without getting into 
+      #logically difficult if/else statements.  Much simpler to use returns. 
+      # case @points 
+      #   when 0 # program errors if return is not on a new line. 
+      #     return 'love'
+
+      #   when 1 
+      #     return "fifteen"
+
+      #   when 2 
+      #     return "thirty"
+
+      #   when 3 
+      #     if @opponent.points != 3
+      #       return "forty"
+      #     elsif @opponent.points == 3 
+      #       return "deuce!"
+      #     end
+
+      #   #--------- This is where I gave up on the case method ------------#
+      #   #-------everything above this point (in case method) worked fine -#
+      #   # when 4 
+      #   #   if @player.points = 
+      #   #   return "advantage" if @points == @opponent.points + 1
+
+      #   # when 5  <-- need to figure out how to set a winner. 
+      #   #   return @player + (" is the winner") if (opponent.points 
+
+      #   else 
+      #     return "more than 4"  #testing string if when statements somehow failed. 
+      # end #<--- end of case method
+
+
+      ###----------------- this was my first attempt before using cases -------##
       # if @points == 0
       #   return 'love'
 
@@ -65,27 +111,7 @@ module Tennis
       # elsif @points == 3
       #   return 'forty'
       # end
-
-      case @points 
-        when 0 
-          return 'love'
-        when 1 
-          return "fifteen"
-        when 2 
-          return "thirty"
-        when 3 
-          return "forty"
-        else return "nothing"
-      end
-
-      # return 'love' if @points == 0
-
-
-    end
-
- 
-
-
-
+    end # <-- end of score method
+  
   end  # <- ending class Player
 end # <- end of file
