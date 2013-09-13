@@ -12,7 +12,12 @@ describe Tennis::Game do
       expect(game.player2).to be_a(Tennis::Player)
     end
 
-    it 'sets the opponent for each player'
+    it 'sets the opponent for each player' do
+      expect(game.player1.opponent = game.player2)
+      expect(game.player2.opponent = game.player1)
+    end
+
+
   end
 
   describe '#wins_ball' do
