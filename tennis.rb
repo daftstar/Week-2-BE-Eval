@@ -18,9 +18,13 @@ module Tennis
     # winner - The Integer (1 or 2) representing the winning player.
     # Returns the score of the winning player. 
     def wins_ball(winner)
-
-
-
+      # this is where we increment the winner of each ball by 1 point
+      if winner == 1
+        @player1.record_won_ball!
+        #Player.record_won_ball!(@player1)
+      elsif winner == 2
+        @player2.record_won_ball!
+      end
 
       # TODO: Think it's gross to pass an integer instead of a player object?
       # Then reimplement this method!
@@ -33,7 +37,7 @@ module Tennis
 #------------------PLAYER FUNCTIONALITY-------------------#
 
 
-  class Player
+  class Player 
     attr_accessor :points, :opponent
 
     def initialize
@@ -49,28 +53,33 @@ module Tennis
 
     # Returns the String score for the player.
     def score
-      # case string_score
-      #   when @points == 0 
-      #     return 'love'
-      #   when @points == 1 
-      #     return "fifteen"
-      #   when @points == 2 
-      #     return "thirty"
-      #   when @points == 3 
-      #     return "forty"
-      #   else return "nothing"
+      # if @points == 0
+      #   return 'love'
+
+      # elsif @points == 1
+      #   return 'fifteen'
+
+      # elsif @points == 2
+      #   return 'thirty'
+
+      # elsif @points == 3
+      #   return 'forty'
       # end
 
-      # return 'love' if @points == 0
-      if @points == 0
-        return 'love'
-      elsif @points == 1
-        return 'fifteen'
-      elsif @points == 2
-        return 'thirty'
-      elsif @points == 3
-        return 'forty'
+      case @points 
+        when 0 
+          return 'love'
+        when 1 
+          return "fifteen"
+        when 2 
+          return "thirty"
+        when 3 
+          return "forty"
+        else return "nothing"
       end
+
+      # return 'love' if @points == 0
+
 
     end
 
