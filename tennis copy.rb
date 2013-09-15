@@ -14,7 +14,6 @@ module Tennis
     # Records a win for a ball in a game.
     # winner - The Integer (1 or 2) representing the winning player.
     # Returns the score of the winning player. 
-
     def wins_ball(winner)
       # this is where we increment the winner of each ball by 1 point
       if winner == 1
@@ -34,44 +33,24 @@ module Tennis
 
 #------------------PLAYER FUNCTIONALITY-------------------#
 
+
   class Player 
-    attr_accessor :points, :opponent, :game_points
+    attr_accessor :points, :opponent
 
     def initialize
       @points = 0
-      @game_points = 0
     end
 
-
-
+    # Increments the score by 1.
+    # Returns the integer new score.
     def record_won_ball!
-      # Check to see if a win-point results in a win-game outcome. 
-      if @points > 3 && @points >= @opponent.points + 2
-        @points = 0
-        @opponent.points = 0
-        @game_points += 1
-      else
-        @points +=1 
-    # @player1.points = 0
-    # @player2.points = 0
-      end 
+      @points += 1
+
     end
-
-    #def record_won_game!
-    #   # sets game points when enough points have been reached to win a game. 
-    #   if @points > 3 && @points >= @opponent.points + 2
-    #     @game_points += 1
-    #   else
-    #     @game_points += 1
-    #     # @player1.points = 0
-    #     # @player2.points = 0
-    #   end
-    # end
-
-
 
     # Returns the String score for the player.
     def score
+
       return 'love'       if @points == 0
       return 'fifteen'    if @points == 1
       return 'thirty'     if @points == 2

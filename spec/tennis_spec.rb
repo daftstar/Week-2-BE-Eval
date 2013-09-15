@@ -52,6 +52,11 @@ describe Tennis::Player do
     end
   end
 
+
+ 
+    # ---------- REGULAR SCORE TEST CASES ------------------------#
+
+
   describe '#score' do
     context 'when points is 0' do
       it 'returns love' do
@@ -100,6 +105,9 @@ describe Tennis::Player do
     end
 
 
+    # ---------- ADVANTAGE SCORE TEST CASES ------------------#
+
+
     context 'when player points is 4 and opponent points is 3' do
       it 'returns advantage' do
         player.points = 4
@@ -120,7 +128,7 @@ describe Tennis::Player do
       end
     end
 
-
+    # ---------- WINNING SCORE TEST CASES ------------------------#
     context 'when player points is 4 and opponent points is < 3' do
       it 'returns winner' do
         player.points = 4
@@ -131,7 +139,7 @@ describe Tennis::Player do
     end
 
     # this happens when players have gone beyond basic tennis deuce.  
-    context 'when player points is > 4 and player points 2 above opponent points' do
+    context 'when player points > 4 and player points 2 above opponent points' do
       it 'returns winner' do
         player.points = 8
         player.opponent.points = 6
@@ -139,6 +147,37 @@ describe Tennis::Player do
         expect(player.score).to eq('winner')
       end
     end    
+
+
+# ---------- WINNING GAME TEST CASE ------------------------#
+
+
+  context 'increment game counter by 1' do
+    it 'increments games won by 1' do
+      player.points = 7
+      player.opponent.points = 5
+
+      player.record_won_ball! #runs method to record winning game point
+      expect(player.game_points).to eq(1)
+      
+      #expect(player.record_won_ball!).to eq(1) - this will always return 1
+
+    end
+  end
+
+
+ # ------- This shoult result in 0, testing advantage ---- #
+  context 'should not increment game counter by 1' do
+    it 'will not increment games won by 1' do
+      player.points = 6
+      player.opponent.points = 5
+
+      player.record_won_ball! #runs method to record winning game point
+      expect(player.game_points).to eq(0)
+      
+    end
+  end
+
 
   end
 end
