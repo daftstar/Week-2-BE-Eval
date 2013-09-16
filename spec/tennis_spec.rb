@@ -30,6 +30,9 @@ describe Tennis::Game do
   end
 end
 
+
+
+
 describe Tennis::Player do
   let(:player) do
     player = Tennis::Player.new
@@ -128,7 +131,7 @@ describe Tennis::Player do
       end
     end
 
-    # ---------- WINNING SCORE TEST CASES ------------------------#
+    # ---------- WINNING SCORE NAMING TEST CASES ------------------------#
     context 'when player points is 4 and opponent points is < 3' do
       it 'returns winner' do
         player.points = 4
@@ -152,7 +155,7 @@ describe Tennis::Player do
 # ---------- WINNING GAME TEST CASE ------------------------#
 
 
-  context 'increment game counter by 1' do
+  context 'player wins a game' do
     it 'increments games won by 1' do
       player.points = 7
       player.opponent.points = 5
@@ -166,8 +169,8 @@ describe Tennis::Player do
   end
 
 
- # ------- This shoult result in 0, testing advantage ---- #
-  context 'should not increment game counter by 1' do
+ # ------- This shoult result in 0, testing advantage scoring---- #
+  context 'when player is in advantage situation' do
     it 'will not increment games won by 1' do
       player.points = 6
       player.opponent.points = 5
@@ -178,6 +181,20 @@ describe Tennis::Player do
     end
   end
 
+
+
+# ---------- WINNING SET TEST CASE ------------------------#
+
+
+  context 'player wins a set' do
+    it 'increments sets won by 1' do
+      player.game_points = 6
+      player.opponent.game_points = 1
+
+      player.record_won_game! #runs method to record winning game point
+      expect(player.set_points).to eq(1)  
+    end
+  end
 
   end
 end

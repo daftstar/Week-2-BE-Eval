@@ -24,8 +24,7 @@ module Tennis
         @player2.record_won_ball!
       end
 
-      # TODO: Think it's gross to pass an integer instead of a player object?
-      # Then reimplement this method!
+
     end
 
   end # <- ending class Game
@@ -35,41 +34,33 @@ module Tennis
 #------------------PLAYER FUNCTIONALITY-------------------#
 
   class Player 
-    attr_accessor :points, :opponent, :game_points
+    attr_accessor :points, :opponent, :game_points, :set_points
 
     def initialize
       @points = 0
       @game_points = 0
+      @set_points = 0
+    end
+
+
+# --------  RESETS POINTS & GAME POINTS -----------------
+    def reset_points
+      @points = 0
+      @opponent.points = 0
+    end
+
+
+    def reset_game_points
+      @game_points = 0 
+      @opponent.game_points = 0
+
+      reset_points
+
     end
 
 
 
-    def record_won_ball!
-      # Check to see if a win-point results in a win-game outcome. 
-      if @points > 3 && @points >= @opponent.points + 2
-        @points = 0
-        @opponent.points = 0
-        @game_points += 1
-      else
-        @points +=1 
-    # @player1.points = 0
-    # @player2.points = 0
-      end 
-    end
-
-    #def record_won_game!
-    #   # sets game points when enough points have been reached to win a game. 
-    #   if @points > 3 && @points >= @opponent.points + 2
-    #     @game_points += 1
-    #   else
-    #     @game_points += 1
-    #     # @player1.points = 0
-    #     # @player2.points = 0
-    #   end
-    # end
-
-
-
+# -------  POINTS TO TENNIS LINGO READOUT -----------------
     # Returns the String score for the player.
     def score
       return 'love'       if @points == 0
@@ -79,57 +70,50 @@ module Tennis
       return 'deuce!'     if @points >= 3 && @points == @opponent.points 
       return 'advantage'  if @points  > 3 && @points == @opponent.points + 1
       return 'winner'     if @points  > 3 && @points == @opponent.points + 2
+    end
 
 
+
+
+# --------  RECORDS WINNING A POINT -----------------
+
+    def record_won_ball!
+      # Check to see if a win-point results in a win-game outcome. 
+      if @points > 3 && @points >= @opponent.points + 2
+        @game_points += 1
+        
+        record_won_game!
+        reset_points
+
+      else
+        @points +=1 
+      end 
+    end
+
+
+# --------  RECORDS WINNING A GAME  -----------------
+
+    def record_won_game!
+      if @game_points >= 5 && @game_points >= @opponent.game_points + 2
+
+        record_won_set!
+      end
+    end
+
+
+
+# --------  RECORDS WINNING A SET  -----------------
+
+    def record_won_set!
+      reset_points
+      reset_game_points     
       
-
-      #gave up on case method.  Could not figure out to use case comparisons without getting into 
-      #logically difficult if/else statements.  Much simpler to use returns. 
-      # case @points 
-      #   when 0 # program errors if return is not on a new line. 
-      #     return 'love'
-
-      #   when 1 
-      #     return "fifteen"
-
-      #   when 2 
-      #     return "thirty"
-
-      #   when 3 
-      #     if @opponent.points != 3
-      #       return "forty"
-      #     elsif @opponent.points == 3 
-      #       return "deuce!"
-      #     end
-
-      #   #--------- This is where I gave up on the case method ------------#
-      #   #-------everything above this point (in case method) worked fine -#
-      #   # when 4 
-      #   #   if @player.points = 
-      #   #   return "advantage" if @points == @opponent.points + 1
-
-      #   # when 5  <-- need to figure out how to set a winner. 
-      #   #   return @player + (" is the winner") if (opponent.points 
-
-      #   else 
-      #     return "more than 4"  #testing string if when statements somehow failed. 
-      # end #<--- end of case method
+      @set_points +=1
+      end
+    
 
 
-      ###----------------- this was my first attempt before using cases -------##
-      # if @points == 0
-      #   return 'love'
 
-      # elsif @points == 1
-      #   return 'fifteen'
-
-      # elsif @points == 2
-      #   return 'thirty'
-
-      # elsif @points == 3
-      #   return 'forty'
-      # end
-    end # <-- end of score method
   
   end  # <- ending class Player
 end # <- end of file
